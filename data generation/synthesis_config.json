@@ -1,0 +1,7 @@
+{
+    "Tool_DIR" : "F:\\code\\pose\\test-data\\tool-best.nrrd",
+    "Save_DIR" : "F:\\code\\pose2\\data\\testing",
+    "LND_DIR" : "F:\\code\\pose\\test-data\\landmarks.txt",
+    "IMAGE_COUNT": 1000,
+    "START_NAME": 1
+}
