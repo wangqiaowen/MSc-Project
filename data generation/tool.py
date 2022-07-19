@@ -19,12 +19,12 @@ def getRotationMatrix(rx=0, ry=0, rz=0):
 
 class tool:
     ''' the main class to simulate the tool and apply spatial transformations on it
-    As input, this class tkas the 3D volume of the tool and the corresponding 3D landmark coordinates'''
+    As input, this class takes the 3D volume of the tool and the corresponding 3D landmark coordinates'''
     def __init__(self, tool, lnd, verbose=True):
         self.tool = tool
         self.out_tool = None
         self.out_land = None
-        self.land = lnd
+        self.land = lnd   # 3D coordinates
         self.random = None
         self.trn_range = None
         self.rot_range = None
@@ -88,9 +88,9 @@ class tool:
 
     def GetTool(self, use_reference=True):
         ''' Returns the transformed tool and the transformed 3D landmakr coordinates'''
-        out_tool, affine = self.moveTool(use_reference)
+        out_tool, affine, rx, ry, rz, trnMat = self.moveTool(use_reference)
         lanlan = np.asarray([affine.GetInverse().TransformPoint(p) for p in self.land])
-        return out_tool, lanlan
+        return out_tool, lanlan, rx, ry, rz, trnMat
         
 
     def moveTool(self, use_reference=True):
@@ -98,10 +98,12 @@ class tool:
         affine = sitk.AffineTransform(3)
 
         if self.random:
-            matrix = self.generateRandomPose(trn_range=self.trn_range, rot_range=self.rot_range, rot_centre=self.rot_centre)
+            matrix, rx, ry, rz, trnMat= self.generateRandomPose(trn_range=self.trn_range, rot_range=self.rot_range, rot_centre=self.rot_centre)
 
         else: 
             matrix = self.generatePose(trn=self.trn, rot=self.rot, rot_centre=self.rot_centre)
+
+            rx, ry, rz, trnMat = 0, 0 ,0 , 0
  
 
         affine.SetTranslation(matrix[0:3, 3].ravel())
@@ -131,7 +133,7 @@ class tool:
         resampler.SetTransform(affine)
         resampler.SetOutputPixelType(sitk.sitkUInt8)
 
-        return resampler.Execute(self.tool), affine
+        return resampler.Execute(self.tool), affine, rx, ry, rz, trnMat
 
 
     
@@ -148,7 +150,7 @@ class tool:
         cenMat[0:3, -1] = rot_centre
         mincenMat[0:3, -1] = -1 * rot_centre
 
-        return trnMat @ (cenMat @ rotMat @ mincenMat) 
+        return trnMat @ (cenMat @ rotMat @ mincenMat) ,rx, ry, rz, trnMat
     
 
     def generatePose(self, trn, rot, rot_centre):

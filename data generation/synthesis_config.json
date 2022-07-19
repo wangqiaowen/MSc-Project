@@ -1,7 +1,8 @@
 {
-    "Tool_DIR" : "F:\\code\\pose\\test-data\\tool-best.nrrd",
-    "Save_DIR" : "F:\\code\\pose2\\data\\testing",
-    "LND_DIR" : "F:\\code\\pose\\test-data\\landmarks.txt",
+    "Tool_DIR" : "/Users/qiaowenwang/Github/MSc-Project/data generation/tool-best.nrrd",
+    "Save_DIR" : "/Users/qiaowenwang/Github/MSc-Project/data generation/probieren",
+    "LND_DIR" : "/Users/qiaowenwang/Github/MSc-Project/data generation/landmarks.txt",
     "IMAGE_COUNT": 1000,
-    "START_NAME": 1
+    "START_NAME": 1,
+    "Garbage_DIR" : "/Users/qiaowenwang/Github/MSc-Project/data generation/garbage"
 }
