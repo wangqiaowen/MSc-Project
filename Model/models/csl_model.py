@@ -1,5 +1,6 @@
 from Model.models.l_model import LModel
 from Model.Helpers.models.utils import *
+from Model.models.utils import up_projection_block
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Model
